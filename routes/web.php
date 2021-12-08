@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SiteController;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -39,11 +40,28 @@ Route::get('/', function () {
 //    $product->save();
 //
 //    dd($product);
+
+    $category = new Category();
+    $category->name = 'Category 1';
+    $category->status = false;
+    $category->save();
+
+    $data = [
+        'name' => 'Category 2',
+        'status' => true,
+    ];
+
+    Category::query()->create($data);
+
     return view('main');
 });
 
 Route::get('/store', function () {
     return view('store');
+});
+
+Route::get('/product', function () {
+    return view('product');
 });
 
 //Route::get('hello', [SiteController::class, 'index']);
