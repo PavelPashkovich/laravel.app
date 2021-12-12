@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteController;
 
 use App\Models\Category;
@@ -41,28 +43,35 @@ Route::get('/', function () {
 //
 //    dd($product);
 
-    $category = new Category();
-    $category->name = 'Category 1';
-    $category->status = false;
-    $category->save();
-
-    $data = [
-        'name' => 'Category 2',
-        'status' => true,
-    ];
-
-    Category::query()->create($data);
+//    $category = new Category();
+//    $category->name = 'Category 1';
+//    $category->status = false;
+//    $category->save();
+//
+//    $data = [
+//        'name' => 'Category 2',
+//        'status' => true,
+//    ];
+//
+//    Category::create($data);
 
     return view('main');
 });
+
+
+Route::get('show-form', [FormController::class, 'showForm'])->name('showForm');
+Route::post('show-form', [FormController::class, 'postForm'])->name('namePostForm');
+
+Route::get('product/{id}', [ProductController::class, 'index'])->name('show-product');
+
 
 Route::get('/store', function () {
     return view('store');
 });
 
-Route::get('/product', function () {
-    return view('product');
-});
+//Route::get('/product', function () {
+//    return view('product');
+//});
 
 //Route::get('hello', [SiteController::class, 'index']);
 
