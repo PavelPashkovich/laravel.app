@@ -21,11 +21,11 @@ class ProductController extends Controller
     public function catalog() {
         $products = Product::query()
             ->where('status', 1)
-            ->simplePaginate(9);
+            ->paginate(9);
 //        dd($products);
 
         $brands = Brand::all();
-
+//        dd($brands);
         $categories = Category::all();
 
         return view('product.catalog', [

@@ -36,8 +36,8 @@
 
                         @foreach($categories as $category)
                         <div class="input-checkbox">
-                            <input type="checkbox" id="category-1">
-                            <label for="category-1">
+                            <input type="checkbox" id="{!! $category->id !!}">
+                            <label for="{!! $category->id !!}">
                                 <span></span>
                                 {!! $category->name !!}
                                 <small>(120)</small>
@@ -73,16 +73,18 @@
                 <div class="aside">
                     <h3 class="aside-title">Brand</h3>
                     <div class="checkbox-filter">
+
                         @foreach($brands as $brand)
                         <div class="input-checkbox">
-                            <input type="checkbox" id="brand-1">
-                            <label for="brand-1">
+                            <input type="checkbox" id="{!! $brand->id !!}">
+                            <label for="{!! $brand->id !!}">
                                 <span></span>
                                 {!! $brand->name !!}
                                 <small>(578)</small>
                             </label>
                         </div>
                         @endforeach
+
                     </div>
                 </div>
                 <!-- /aside Widget -->
@@ -171,7 +173,9 @@
                             <div class="product-body">
                                 <p class="product-category">Category</p>
                                 <h3 class="product-name"><a href="#">{{ $product->name }}</a></h3>
-                                <h4 class="product-price">{{ $product->price }} <del class="product-old-price">$990.00</del></h4>
+                                <h4 class="product-price">{{ $product->price }}
+{{--                                    <del class="product-old-price">$990.00</del>--}}
+                                </h4>
                                 <div class="product-rating">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -193,7 +197,7 @@
                     <!-- /product -->
                         @endforeach
 
-                    <div class="clearfix visible-sm visible-xs"></div>
+                    <div class="clearfix visible-lg visible-md"></div>
                     @endforeach
 
                 </div>
@@ -201,10 +205,10 @@
 
                 <!-- store bottom filter -->
                 <div class="store-filter clearfix">
-{{--                    <span class="store-qty">Showing {{ $products->currentPage() * $products->perPage() }}-{{ $products->total() }} products</span>--}}
-                    <span class="store-qty">Showing {{ $products->currentPage() * $products->perPage() }} products</span>
-                    {!! $products->links('vendor.pagination.simple-p') !!}
-                    {!! $products->links('vendor.pagination.simple-tailwind-p') !!}
+                    <span class="store-qty">Showing {{ $products->currentPage() * $products->perPage() }}-{{ $products->total() }} products</span>
+{{--                    <span class="store-qty">Showing {{ $products->currentPage() * $products->perPage() }} products</span>--}}
+                    {!! $products->links() !!}
+{{--                    {!! $products->links('vendor.pagination.simple-tailwind-p') !!}--}}
 
 
                     <ul class="store-pagination">
