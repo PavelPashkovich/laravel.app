@@ -3,12 +3,12 @@
 <head>
     <title>Bootstrap Admin Theme v3</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap -->
     <link href="{{ asset('/adm/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- styles -->
-    <link href="{{ asset('/adm/bootstrap/css/styles.css') }}" rel="stylesheet">
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="{{ asset('/adm/css/styles.css') }}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -86,10 +86,10 @@
             </div>
         </div>
         <div class="col-md-10">
-
-        @yield('content')
-
-
+            @yield('content')
+        </div>
+    </div>
+</div>
 
 <footer>
     <div class="container">
