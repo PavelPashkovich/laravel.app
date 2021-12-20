@@ -36,11 +36,11 @@
 
                         @foreach($categories as $category)
                         <div class="input-checkbox">
-                            <input type="checkbox" id="{!! $category->id !!}">
-                            <label for="{!! $category->id !!}">
+                            <input type="checkbox" id="category-{{ $category->id }}">
+                            <label for="category-{{ $category->id }}">
                                 <span></span>
-                                {!! $category->name !!}
-                                <small>(120)</small>
+                                {{ $category->name }}
+                                <small>({{ mt_rand(30, 220) }})</small>
                             </label>
                         </div>
                         @endforeach
@@ -76,11 +76,11 @@
 
                         @foreach($brands as $brand)
                         <div class="input-checkbox">
-                            <input type="checkbox" id="{!! $brand->id !!}">
-                            <label for="{!! $brand->id !!}">
+                            <input type="checkbox" id="brand-{{ $brand->id }}">
+                            <label for="brand-{{ $brand->id }}">
                                 <span></span>
-                                {!! $brand->name !!}
-                                <small>(578)</small>
+                                {{ $brand->name }}
+                                <small>({{ mt_rand(10, 250) }})</small>
                             </label>
                         </div>
                         @endforeach
