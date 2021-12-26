@@ -4,6 +4,7 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteController;
 
+use App\Http\Middleware\CheckAuth;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -63,16 +64,16 @@ Route::get('admin', function () {
 });
 
 
-Route::resources([
-    'brand' => \App\Http\Controllers\Admin\BrandController::class,
-    'category' => \App\Http\Controllers\Admin\CategoryController::class,
-    'product' => \App\Http\Controllers\Admin\ProductController::class,
-]);
 
-//Route::resource('brand', \App\Http\Controllers\Admin\BrandController::class)->except(['destroy']);
-//Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
-//Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
 
+Route::prefix('admin')->name('admin.')
+    ->group(function () {
+    Route::resources([
+        'brand' => \App\Http\Controllers\Admin\BrandController::class,
+        'category' => \App\Http\Controllers\Admin\CategoryController::class,
+        'product' => \App\Http\Controllers\Admin\ProductController::class,
+    ]);
+});
 
 
 
