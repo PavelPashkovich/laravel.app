@@ -16,7 +16,6 @@ class BrandController extends Controller
     public function index()
     {
         $brands = Brand::paginate();
-//        dd($brands);
         return view('admin.brand.index', [
             'brands' => $brands,
         ]);
@@ -38,12 +37,11 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBrandRequest $request)
     {
-         $data = $request->all();
-        $brand = Brand::query()->create($data);
-//        dd($brand);
-        return redirect(route('admin.brand.index'), ['page' => 3]);
+        $data = $request->all();
+        Brand::query()->create($data);
+        return redirect(route('admin.brand.index'));
     }
 
     /**
@@ -54,8 +52,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-//        $brand = Brand::find($id);
-        dd($brand);
+        return view('admin.brand.show', ['brands' => $brand]);
     }
 
     /**
@@ -80,7 +77,6 @@ class BrandController extends Controller
     {
         $brand->fill($request->all());
         $brand->save();
-//        dd($brand);
         return redirect(route('admin.brand.index'));
     }
 
