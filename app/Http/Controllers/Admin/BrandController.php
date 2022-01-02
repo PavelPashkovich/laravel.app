@@ -73,7 +73,7 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(CreateBrandRequest $request, Brand $brand)
     {
         $brand->fill($request->all());
         $brand->save();

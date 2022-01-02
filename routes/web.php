@@ -66,13 +66,16 @@ Route::get('admin', function () {
 
 
 
-Route::prefix('admin')->name('admin.')
+Route::middleware(CheckAuth::class)->prefix('admin')->name('admin.')
     ->group(function () {
-    Route::resources([
-        'brand' => \App\Http\Controllers\Admin\BrandController::class,
-        'category' => \App\Http\Controllers\Admin\CategoryController::class,
-        'product' => \App\Http\Controllers\Admin\ProductController::class,
-    ]);
+        Route::get('/', function () {
+           echo 'test';
+        });
+        Route::resources([
+            'brand' => \App\Http\Controllers\Admin\BrandController::class,
+            'category' => \App\Http\Controllers\Admin\CategoryController::class,
+            'product' => \App\Http\Controllers\Admin\ProductController::class,
+        ]);
 });
 
 
