@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateBrandRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -39,8 +40,20 @@ class BrandController extends Controller
      */
     public function store(CreateBrandRequest $request)
     {
+//        $file = $request->file('logo');
+        $filePath = $request->file('logo')->store('logos', 'public');
         $data = $request->all();
-        Brand::query()->create($data);
+        $data['logo'] = $filePath;
+
+//        dd($file->storeAs('new', 'newImage.jpg', 'public'));
+//        dd($file->store('newFolder'));
+//        Storage::put('ololo/picture.jpg', $file->getContent());
+//        Storage::putFileAs('/ololo', $file, 'pic.jpg');
+
+//        dd(Storage::disk('public')->putFileAs('/ololo', $file, 'pic.jpg'));
+//        dd($file->getContent());
+//        $data = $request->all();
+//        Brand::query()->create($data);
         return redirect(route('admin.brand.index'));
     }
 

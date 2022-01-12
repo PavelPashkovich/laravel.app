@@ -8,6 +8,7 @@ use App\Http\Middleware\CheckAuth;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,27 @@ Route::get('/', function () {
 
 Route::get('admin', function () {
     return view('admin.index');
+//    $file = Illuminate\Support\Facades\Storage::get('1.txt');
+//    \Illuminate\Support\Facades\Storage::
+});
+
+Route::get('test-file', function () {
+    $products = \App\Models\Product::where('id', '>', '5')->get();
+
+    foreach ($products as $product) {
+        dump($product->brand);
+    };
+
+//    Storage::disk('public')->put('1.txt', 'ololo');
+//    $file = Storage::get('1.txt');
+//    Storage::prepend('1.txt', 'hello');
+//    Storage::append('1.txt', 'hi');
+//    dump(Storage::path('1.txt'));
+//    Storage::exists();
+//    Storage::missing();
+//    return Storage::download('1.txt', 'r');
+//    dump(Storage::disk('public')->url('1.txt'));
+
 });
 
 

@@ -24,6 +24,7 @@
                     <tr>
                         <td>{{ $loop->iteration + (($brands->currentPage() - 1) * $brands->perPage())}}</td>
                         <td>{{ $brand->name }}</td>
+                        <td>{{ \Illuminate\Support\Facades\Storage::disk('public')->url($brand->logo) }}</td>
                         @if($brand->status == 1)
                         <td>{{ 'Active' }}</td>
                         @else
