@@ -67,23 +67,39 @@ Route::get('admin', function () {
 });
 
 Route::get('test-file', function () {
-    $products = \App\Models\Product::where('id', '>', '5')->get();
+    $products = \App\Models\Product::where('id', '<', '5')->with('brand')->get();
 
     foreach ($products as $product) {
         dump($product->brand);
     };
 
-//    Storage::disk('public')->put('1.txt', 'ololo');
-//    $file = Storage::get('1.txt');
-//    Storage::prepend('1.txt', 'hello');
-//    Storage::append('1.txt', 'hi');
-//    dump(Storage::path('1.txt'));
-//    Storage::exists();
-//    Storage::missing();
-//    return Storage::download('1.txt', 'r');
-//    dump(Storage::disk('public')->url('1.txt'));
+//    $product = \App\Models\Product::first();
+//    dump($product->brand()->first());
 
+
+//    Storage::disk('public')->put('pictures/5.txt', 'Hola, muchacha!');
+//    $file = Storage::disk('public')->get('pictures/5.txt');
+//    dump($file);
+//    Storage::put('images/3.txt', 'Hasta la vista, baby!');
+//    $file = Storage::get('images/3.txt');
+//    $file = Storage::path('images/3.txt');
+//    $file = Storage::url('images/3.txt');
+//    $file = Storage::exists('images/3.txt');
+//    $file = Storage::missing('images/3.txt');
+//    Storage::prepend('images/3.txt', 'Terminator says: ');
+//    Storage::append('images/3.txt', 'Good bye, Terminator');
+//    return Storage::download('images/3.txt', 'r');
+//    dump($file);
+//    $size = Storage::size('images/3.txt');
+//    dump($size);
+//    $lastModified = Storage::lastModified('images/3.txt');
+//    dump($lastModified);
+
+//    dump(Storage::disk('public')->path('images/3.txt'));
 });
+
+Route::get('cart', [\App\Http\Controllers\CartController::class, 'index']);
+Route::post('add-to-cart', [\App\Http\Controllers\CartController::class, 'addToCart'])->name('addToCart');
 
 
 

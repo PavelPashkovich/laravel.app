@@ -14,8 +14,8 @@ class AddColumnsToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-//            $table->unsignedBigInteger('brand_id');
-//            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->unsignedBigInteger('brand_id');
+            $table->foreign('brand_id')->references('id')->on('brands');
 
         });
     }

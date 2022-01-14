@@ -40,21 +40,19 @@ class BrandController extends Controller
      */
     public function store(CreateBrandRequest $request)
     {
-//        $file = $request->file('logo');
-        $filePath = $request->file('logo')->store('logos', 'public');
+        $filePath = $request->file('logo')->storeAs('brands', 'maiz.jpg', 'public');
+//        dd($filePath);
         $data = $request->all();
         $data['logo'] = $filePath;
+        dd($data['logo']);
 
-//        dd($file->storeAs('new', 'newImage.jpg', 'public'));
-//        dd($file->store('newFolder'));
-//        Storage::put('ololo/picture.jpg', $file->getContent());
-//        Storage::putFileAs('/ololo', $file, 'pic.jpg');
+//        $file = $request->file('logo');
+//        $file->store('brands/logos', 'public');
+//        $file->storeAs('brands/logos', 'maiz21.jpg', 'public');
+//        Storage::put('public/brands/logos/maiz.jpg', $file->getContent());
+//        $path = Storage::disk('public')->putFileAs('brands/logos', $file, 'photoMaiz2.jpg');
+//        dd($file->getMimeType());
 
-//        dd(Storage::disk('public')->putFileAs('/ololo', $file, 'pic.jpg'));
-//        dd($file->getContent());
-//        $data = $request->all();
-//        Brand::query()->create($data);
-        return redirect(route('admin.brand.index'));
     }
 
     /**
