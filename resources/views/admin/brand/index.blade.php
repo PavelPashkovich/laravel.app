@@ -13,6 +13,7 @@
                     <tr>
                         <th>#</th>
                         <th>Brand Name</th>
+                        <th>Brand Logo</th>
                         <th>Brand Status</th>
                         <th>Creation year</th>
                         <th>Actions</th>
