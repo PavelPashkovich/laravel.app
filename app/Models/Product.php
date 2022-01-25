@@ -31,10 +31,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
-    protected $fillable = ['name', 'price', 'img', 'status', 'brand_id'];
+    protected $fillable = ['name', 'content', 'price', 'img', 'status', 'brand_id'];
 
     public function brand() {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class)->withDefault([
+            'name' => 'No name',
+            'logo' => 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fproslang.ru%2Finternet-sleng%2Fchto-znachit-nounejm.html&psig=AOvVaw0HlLdU1FlSlhEDR8qjUqUe&ust=1642327231191000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMj6hu6_s_UCFQAAAAAdAAAAABAD',
+        ]);
+    }
+
+    public function image() {
+        return $this->morphOne(Image::class, 'imageable');
     }
 
 //    protected $guarded = ['id'];

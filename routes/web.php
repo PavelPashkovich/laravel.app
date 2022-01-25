@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteController;
 
+use App\Http\Controllers\WishListController;
 use App\Http\Middleware\CheckAuth;
 use App\Models\Category;
 use App\Models\Product;
@@ -67,14 +69,25 @@ Route::get('admin', function () {
 });
 
 Route::get('test-file', function () {
-    $products = \App\Models\Product::where('id', '<', '5')->with('brand')->get();
 
-    foreach ($products as $product) {
-        dump($product->brand);
-    };
+//    $product = Product::find(2);
+//
+//    $image = \App\Models\Image::create([
+//        'url' => 'ololo',
+//        'imageable_id' => $product->id,
+//        'imageable_type' => Product::class,
+//    ]);
+//
+//    dump($image);
 
-//    $product = \App\Models\Product::first();
-//    dump($product->brand()->first());
+//    $products = \App\Models\Product::where('id', '<', '5')->with('brand')->get();
+//
+//    foreach ($products as $product) {
+//        dump($product->brand);
+//    };
+
+//    $brand = \App\Models\Brand::find(1);
+//    dump($brand->products()->where('price', '>', 5)->get());
 
 
 //    Storage::disk('public')->put('pictures/5.txt', 'Hola, muchacha!');
@@ -83,13 +96,13 @@ Route::get('test-file', function () {
 //    Storage::put('images/3.txt', 'Hasta la vista, baby!');
 //    $file = Storage::get('images/3.txt');
 //    $file = Storage::path('images/3.txt');
-//    $file = Storage::url('images/3.txt');
+    $file = Storage::disk('public')->url('images/3.txt');
 //    $file = Storage::exists('images/3.txt');
 //    $file = Storage::missing('images/3.txt');
 //    Storage::prepend('images/3.txt', 'Terminator says: ');
 //    Storage::append('images/3.txt', 'Good bye, Terminator');
 //    return Storage::download('images/3.txt', 'r');
-//    dump($file);
+    dump($file);
 //    $size = Storage::size('images/3.txt');
 //    dump($size);
 //    $lastModified = Storage::lastModified('images/3.txt');
@@ -98,8 +111,11 @@ Route::get('test-file', function () {
 //    dump(Storage::disk('public')->path('images/3.txt'));
 });
 
-Route::get('cart', [\App\Http\Controllers\CartController::class, 'index']);
-Route::post('add-to-cart', [\App\Http\Controllers\CartController::class, 'addToCart'])->name('addToCart');
+Route::get('cart', [CartController::class, 'index'])->name('cart');
+Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
+
+Route::get('wishlist', [WishListController::class, 'index'])->name('wishList');
+Route::post('add-to-wishlist', [CartController::class, 'addToWishList'])->name('addToWishList');
 
 
 
