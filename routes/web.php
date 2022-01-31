@@ -23,6 +23,112 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
+Route::get('route', function () {
+    dump(\route('someRoute'));
+})->name('someRoute');
+
+Route::get('weather', function () {
+    $response = \Illuminate\Support\Facades\Http::get('api.openweathermap.org/data/2.5/weather', [
+        'q' => 'Minsk',
+        'appid' => '3b5c5c2d08df33a981a9b27f954eefa3',
+        'lang' => 'ru',
+        'units' => 'metric'
+    ]);
+    dump($response->object());
+    $response2 = \Illuminate\Support\Facades\Http::get('api.openweathermap.org/data/2.5/weather', [
+        'q' => 'Brest',
+        'appid' => '3b5c5c2d08df33a981a9b27f954eefa3',
+        'lang' => 'ru',
+        'units' => 'metric'
+    ]);
+    dump($response2->object());
+});
+
+Route::get('nbrb', function () {
+
+//    $response = \Illuminate\Support\Facades\Http::get('https://www.nbrb.by/api/exrates/rates?ondate=2016-7-6&periodicity=0');
+//    dump($response->json());
+//    dump($response->object());
+//    dump($response->collect());
+//    dump($response->status());
+
+//    $client = new \GuzzleHttp\Client();
+//    $response = $client->request('GET', 'https://www.nbrb.by/api/exrates/rates/145', [
+//        'query' => [
+//            'ondate' => '2021-1-1',
+//            'periodicity' => 0
+//        ]
+//    ]);
+//    dump($response->getBody()->getContents());
+
+//    $client = new \GuzzleHttp\Client();
+//    $response = $client->post('https://www.nbrb.by/api/exrates/rates/145', [
+//        'formParams' => [
+//            'Cur_ID' => 145,
+//            'Cur_RATE' => 5
+//        ]
+//    ]);
+//    dump($response);
+
+//    $client = new \GuzzleHttp\Client();
+//    $response = $client->get('https://www.nbrb.by/api/exrates/rates/145', [
+//        'query' => [
+//            'ondate' => '2021-1-1',
+//            'periodicity' => 0
+//        ]
+//    ]);
+//    dump($response->getStatusCode());
+//    $curr = json_decode($response->getBody()->getContents(), true);
+//    dump($curr);
+
+//    $client = new \GuzzleHttp\Client();
+//    $response = $client->get('https://www.nbrb.by/api/exrates/currencies/145');
+//    dump($response->getStatusCode());
+//    $curr = json_decode($response->getBody()->getContents(), true);
+//    dump($curr);
+
+});
+
+
+Route::get('bingo-job', function () {
+   App\Jobs\BingoJob::dispatch();
+   dump(2222);
+});
+
+//Route::get('mail', function () {
+//
+//});
+
+Route::get('test-bingo', function () {
+   $balance = rand(0, 100);
+   dump($balance);
+   if($balance > 50) {
+       \App\Events\BingoEvent::dispatch($balance);
+   }
+
+//    \Illuminate\Support\Facades\Mail::to(['ololo@mail.ru', 'ololo2@mail.ru'])
+//        ->send(new \App\Mail\BingoMail($balance));
+
+});
+
+
+//Route::get('test-event', function () {
+//    \App\Events\TestEvent::dispatch(1); // первый способ стартовать событие
+//   event(new \App\Events\TestEvent(1)); // второй способ стартовать событие
+//    $balance = 1;
+//    if($balance > 1000) {
+//        \App\Events\TestEvent::dispatch(1);
+//    }
+//});
+
+Route::get('test', function () {
+    $brand = \App\Models\Brand::query()->inRandomOrder()->first();
+    $brand->name = 'Bond';
+//   $brand->save(); // добавление в базу данных
+    dump($brand->fullName);
+});
+
+
 Route::get('/', function () {
 //    $product = Product::find(1);
 //    select * from
@@ -118,21 +224,17 @@ Route::get('wishlist', [WishListController::class, 'index'])->name('wishList');
 Route::post('add-to-wishlist', [CartController::class, 'addToWishList'])->name('addToWishList');
 
 
-
-
 Route::middleware(CheckAuth::class)->prefix('admin')->name('admin.')
     ->group(function () {
         Route::get('/', function () {
-           echo 'test';
+            echo 'test';
         });
         Route::resources([
             'brand' => \App\Http\Controllers\Admin\BrandController::class,
             'category' => \App\Http\Controllers\Admin\CategoryController::class,
             'product' => \App\Http\Controllers\Admin\ProductController::class,
         ]);
-});
-
-
+    });
 
 
 Route::get('show-form', [FormController::class, 'showForm'])->name('showForm');
