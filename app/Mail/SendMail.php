@@ -7,12 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class BingoMail extends Mailable
+class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $balance;
-    public $test;
     public $message;
 
     /**
@@ -20,11 +18,10 @@ class BingoMail extends Mailable
      *
      * @return void
      */
-    public function __construct($balance)
+    public function __construct($message)
     {
-        $this->balance = $balance;
-        $this->test = 'Hi, Neo!';
-     }
+        $this->message = $message;
+    }
 
     /**
      * Build the message.
@@ -34,9 +31,11 @@ class BingoMail extends Mailable
     public function build()
     {
         return $this
-            ->view('mails.bingo')
+            ->from('partisan@belar.us')
+            ->view('mails.sendMail')
+            ->subject('Important!')
             ->with([
-                'text' => 'You won!'
+                'text' => $this->message
             ]);
     }
 }
