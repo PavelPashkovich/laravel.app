@@ -2,7 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\BingoMail;
+use App\Mail\SendMail;
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Mail;
 
 class SendEmailCommand extends Command
 {
@@ -11,18 +16,15 @@ class SendEmailCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:test';
-//    protected $signature = 'command:test {name?}';
-//    protected $signature = 'command:test {name} {--Q|queue=}';
-//    protected $signature = 'command:test {name*} {--Q|queue=}';
-//    protected $signature = 'command:test {name?*} {--Q|queue=}';
+
+    protected $signature = 'send:email {userID} {--message=Long Live Belarus!}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Sends email to a user';
 
     /**
      * Create a new command instance.
@@ -41,17 +43,11 @@ class SendEmailCommand extends Command
      */
     public function handle()
     {
-        $this->info('Hi, Neo!');
-//        $this->error($this->argument('name'));
-//        $this->info($this->argument('name') ?? 'no argument');
-//        $this->info(json_encode($this->argument('name')));
-//        $this->info($this->option('queue'));
-//        $answer = $this->ask('Follow the white rabbit?');
-//        $this->info($answer);
-//        $password = $this->secret('What is the password?');
-//        $this->info($password);
-//        $password = $this->confirm('What is the password?', true);
-//        $this->info($password);
+        $user = User::findOrFail($this->argument('userID'));
+        $email = $user->email;
+        $message = $this->option('message');
+        Mail::to($email)->send(new SendMail($message));
+        $this->info('The message "' . $message . '" was sent successfully to ' . $email);
 
         return Command::SUCCESS;
     }

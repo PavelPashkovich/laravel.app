@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
+Route::get('send-email', [\App\Http\Controllers\SendEmailController::class, 'index']);
+
 Route::get('route', function () {
     dump(\route('someRoute'));
 })->name('someRoute');
