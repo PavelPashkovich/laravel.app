@@ -43,12 +43,15 @@ class SendEmailCommand extends Command
      */
     public function handle()
     {
-        $user = User::findOrFail($this->argument('userID'));
-        $email = $user->email;
-        $message = $this->option('message');
-        Mail::to($email)->send(new SendMail($message));
-        $this->info('The message "' . $message . '" was sent successfully to ' . $email);
-
+        $user = User::find($this->argument('userID'));
+        if (!$user) {
+            $this->warn('User not found!');
+        } else {
+            $email = $user->email;
+            $message = $this->option('message');
+            Mail::to($email)->send(new SendMail($message));
+            $this->info('The message "' . $message . '" was sent successfully to ' . $email);
+        }
         return Command::SUCCESS;
     }
 }

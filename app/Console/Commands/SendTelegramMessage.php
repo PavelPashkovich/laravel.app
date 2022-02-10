@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class SendTelegramMessage extends Command
 {
@@ -37,11 +38,11 @@ class SendTelegramMessage extends Command
      */
     public function handle()
     {
-        $idChannel = '-1001715513410';
-        $botToken = '5164652291:AAFUjnpQwHOLKWcAme6VOg_wy2Pyp1TYxx4';
+        $idChannel = config('telegram_bot.id_channel');
+        $apiToken = config('telegram_bot.api_token');
         $message = urlencode($this->option('message'));
-        file_get_contents("https://api.telegram.org/bot$botToken/sendMessage?chat_id=$idChannel&text=".$message);
-        $this->info('The massage "' . $this->option('message') . '" was sent successfully!');
+        Http::get("https://api.telegram.org/bot$apiToken/sendMessage?chat_id=$idChannel&text=".$message);
+        $this->info('The message "' . $this->option('message') . '" was sent successfully!');
 
         return Command::SUCCESS;
     }
