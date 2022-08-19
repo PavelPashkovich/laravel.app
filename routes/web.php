@@ -23,7 +23,22 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
+Route::get('blade', function () {
+    return view('main');
+});
 
+Route::get('roles', function () {
+    $user = \App\Models\User::first();
+    $user->assignRole('admin');
+//    \Spatie\Permission\Models\Role::create([
+//        'name' => 'admin',
+//        'guard_name' => 'admin'
+//    ]);
+//    \Spatie\Permission\Models\Role::create([
+//        'name' => 'user',
+//        'guard_name' => 'user'
+//    ]);
+});
 
 Route::get('send-email', [\App\Http\Controllers\SendEmailController::class, 'index']);
 
@@ -175,7 +190,6 @@ Route::get('/', function () {
 Route::get('admin', function () {
     return view('admin.index');
 //    $file = Illuminate\Support\Facades\Storage::get('1.txt');
-//    \Illuminate\Support\Facades\Storage::
 });
 
 Route::get('test-file', function () {
@@ -228,8 +242,7 @@ Route::get('wishlist', [WishListController::class, 'index'])->name('wishList');
 Route::post('add-to-wishlist', [CartController::class, 'addToWishList'])->name('addToWishList');
 
 
-Route::middleware(CheckAuth::class)->prefix('admin')->name('admin.')
-    ->group(function () {
+Route::middleware(CheckAuth::class)->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', function () {
             echo 'test';
         });
